@@ -9,5 +9,7 @@ router = APIRouter(
 @router.post("/AuthLogin")
 def AuthLogin(EmpData : EmployeeModel):
     AuthResponse = EmployeeController.AuthLogin(EmpData)
-    
-    return AuthResponse
+    if AuthResponse["status"] == 200:
+        return AuthResponse
+    else:
+        raise HTTPException(status_code=AuthResponse["status"], detail=AuthResponse["message"])
