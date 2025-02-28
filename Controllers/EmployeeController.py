@@ -32,3 +32,36 @@ class EmployeeController:
 
             
         return {"status": 500, "message": "Database connection failed"}
+    
+    def FetchEmployee(EmpData):
+        
+        conn = hrm_db_connection()
+        
+        if conn:
+            try:
+                cursor = conn.cursor(dictionary=True)
+
+                query = "SELECT EMP_ID, EMP_PASSWORD, EMP_ROLE, EMP_DEPARTMENT, EMP_POSITION, EMP_NAME, EMP_GENDER, EMP_BIRTHDATE, EMP_ADDRESS, EMP_PHONE, EMP_EMAIL, EMP_PIC, EMP_STATUS FROM `hrm-system-db`.tbl_employee WHERE EMP_ID LIKE %s;"
+                
+                cursor.execute(query, (f"%{EmpData.EMP_ID}%",))
+
+                result = cursor.fetchall()
+
+                if result:
+                    return {"status": 200, "data": result}
+                else:
+                    return {"status": 404, "message": "No data found"}
+                
+            except Exception as e:
+
+                return {"status": 500, "message": f"Error: {e}"}
+            
+            finally:
+                if cursor:
+                    cursor.close()
+                if conn.is_connected():
+                    conn.close()
+
+            
+        return {"status": 500, "message": "Database connection failed"}
+                
