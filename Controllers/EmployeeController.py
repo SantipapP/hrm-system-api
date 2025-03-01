@@ -41,9 +41,9 @@ class EmployeeController:
             try:
                 cursor = conn.cursor(dictionary=True)
 
-                query = "SELECT EMP_ID, EMP_PASSWORD, EMP_ROLE, EMP_DEPARTMENT, EMP_POSITION, EMP_NAME, EMP_GENDER, EMP_BIRTHDATE, EMP_ADDRESS, EMP_PHONE, EMP_EMAIL, EMP_PIC, EMP_STATUS FROM `hrm-system-db`.tbl_employee WHERE EMP_ID LIKE %s;"
+                query = "select * from tbl_employee te inner join tbl_department td on te.EMP_DEPARTMENT = td.DEP_ID inner join tbl_jobtitle tj on te.EMP_JOB_TITLE = tj.JOT_ID WHERE te.EMP_USERNAME LIKE %s;"
                 
-                cursor.execute(query, (f"%{EmpData.EMP_ID}%",))
+                cursor.execute(query, (f"%{EmpData.EMP_USERNAME}%",))
 
                 result = cursor.fetchall()
 

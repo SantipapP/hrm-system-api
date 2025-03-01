@@ -21,3 +21,8 @@ def FetchEmployee(EmpData : EmployeeModel):
         return FetchResponse
     else:
         raise HTTPException(status_code=FetchResponse["status"], detail=FetchResponse["message"])
+    
+@router.post("/RegisterEmployee")
+def RegisterEmployee(EmpData : EmployeeModel):
+
+    return EmpData
